@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/solid.css" integrity="sha384-ioUrHig76ITq4aEJ67dHzTvqjsAP/7IzgwE7lgJcg2r7BRNGYSK0LwSmROzYtgzs" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/fontawesome.css" integrity="sha384-sri+NftO+0hcisDKgr287Y/1LVnInHJ1l+XC7+FOabmTTIK0HnE2ID+xxvJ21c5J" crossorigin="anonymous">
+    <!-- AdminLTE styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/AdminLTE.min.css') }}">
+    <!-- AdminLTE skin styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skin-yellow.min.css') }}">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <title>{% if title %} {{ title }} {% else %} Вход в систему {% endif %} - CoffeeBot</title>
+</head>
+<body class="hold-transition login-page">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alerts-wrapper">
+                {% for category, message in messages %}
+                    {% set is_error = category == 'error' %}
+                    {% set is_warning = category == 'warning' %}
+                    {% set is_success = category == 'success' %}
+                    <div class="alert alert-{% if is_error %}danger{% elif is_warning %}warning{% elif is_success %}success{% else %}info{% endif %} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fas fa-{% if is_error %}ban{% elif is_warning %}exclamation-triangle{% elif is_success %}check{% else %}info{% endif %}"></i> Сообщение!</h4>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="login-box">
+        <div class="login-logo">
+            <span><b>Admin</b> CoffeeBot</span>
+        </div>
+        <div class="login-box-body">
+            <p class="login-box-msg">{% block login_msg %} {% endblock %}</p>
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

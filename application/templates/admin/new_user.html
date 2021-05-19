@@ -1,0 +1,35 @@
+{% extends 'layouts/admin.html' %}
+{% block breadcrumbs %}
+    <li><a href="{{ url_for('admin.users') }}">Пользователи</a></li>
+    <li class="active">Добавить пользователя</li>
+{% endblock %}
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Добавить пользователя</h3>
+        </div>
+        <div class="box-body">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="form-group {% if form.name.errors|length > 0 %}has-error{% endif %}">
+                    {{ form.name.label }}
+                    {{ form.name(class='form-control', placeholder=form.name.label.text) }}
+                    {% for error in form.name.errors %}
+                        <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group {% if form.phone_number.errors|length > 0 %}has-error{% endif %}">
+                    {{ form.phone_number.label }}
+                    {{ form.phone_number(class='form-control', placeholder=form.phone_number.label.text) }}
+                    {% for error in form.phone_number.errors %}
+                        <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-buttons">
+                    <a href="{{ url_for('admin.users') }}" class="back-button btn btn-flat bg-orange"><i class="fas fa-long-arrow-alt-left"></i>Назад</a>
+                    {{ form.submit(class='save-button btn btn-flat bg-orange') }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

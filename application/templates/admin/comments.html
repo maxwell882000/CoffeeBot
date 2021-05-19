@@ -1,0 +1,23 @@
+{% extends 'layouts/admin.html' %}
+{% block header %}Отзывы{% endblock %}
+{% block description %}пользователей{% endblock %}
+{% block breadcrumbs %}
+    <li class="active">Отзывы</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        {% for comment in comments %}
+            <div class="col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-orange"><i class="fa fas fa-comments"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">{{ comment.text }}</span>
+                        <span class="info-box-user text-muted">
+                            {{ comment.username }}{% if comment.author.username %} - {{ comment.author.username }}{% endif %}{% if comment.author.phone_number %} {{ comment.author.phone_number }}{% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

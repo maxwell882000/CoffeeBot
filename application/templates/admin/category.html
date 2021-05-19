@@ -1,0 +1,92 @@
+{% extends 'layouts/admin.html' %}
+{% block header %}{{ category.name }} | {{ category.name_uz }}{% endblock %}
+{% block breadcrumbs %}
+	<li><a href="{{ url_for('admin.catalog') }}">Каталог</a></li>
+    {% if category.parent %}
+        <a href="{{ url_for('admin.show_category', category_id=category.parent_id) }}">{{ category.parent.name }} | {{ category.parent.name_uz }}</a>
+    {% endif %}
+    <li class="active">{{ category.name }} | {{ category.name_uz }}</li>
+{% endblock %}
+{% block content %}
+    <div class="row add-button">
+        <div class="col-xs-4">
+            <a href="{{ url_for('admin.create_category') }}" class="btn btn-flat bg-orange"><i class="fas fa-plus"></i>Добавить категорию</a>
+        </div>
+    </div>
+    <div class="row add-button">
+        <div class="col-xs-4">
+            <a href="{{ url_for('admin.create_dish') }}" class="btn btn-flat bg-orange"><i class="fas fa-plus"></i>Добавить товар</a>
+        </div>
+    </div>
+    <div class="row add-button">
+        <div class="col-xs-4">
+            <form action="{{ url_for('admin.parse_excel') }}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Загрузить из Excel</label>
+                    <input type="file" name="file" id="file">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Загрузить" class="btn btn-flat bg-orange">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Дочериние категории</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Название</th>
+                                <th>Подкатегории</th>
+                                <th>Товары</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for child in categories %}
+                                <tr>
+                                    <td>
+                                        <input type="number" class="number-counter" min="1" value="{{ child.number }}" data-api-url="{{ url_for('admin.set_category_number', category_id=child.id) }}">                                  
+                                    </td>
+                                    <td>
+                                        {{ child.name }} | {{ child.name_uz }}
+                                    </td>
+                                    <td>
+                                        {% if child.get_children().count() > 0 %}
+                                            <a href="{{ url_for('admin.show_category', category_id=child.id) }}">Показать</a>
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if child.dishes.count() > 0 %}
+                                            <a href="{{ url_for('admin.category_dishes', category_id=child.id) }}">Показать</a>
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('admin.edit_category', category_id=child.id) }}" class="btn btn-flat bg-orange"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ url_for('admin.remove_category', category_id=child.id) }}" onclick="return confirm('Вы уверены?')" class="btn btn-danger btn-flat"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="snackbar">
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/catalog.js') }}"></script>
+{% endblock %}

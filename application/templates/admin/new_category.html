@@ -1,0 +1,52 @@
+{% extends 'layouts/admin.html' %}
+{% block header %}Добавить категорию{% endblock %}
+{% block description %}Редактрировать{% endblock %}
+{% block breadcrumbs %}
+    <li><a href="{{ url_for('admin.catalog') }}">Каталог</a></li>
+    <li class="active">Добавить категорию</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Новая категория</h3>
+                </div>
+                <div class="box-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group {% if form.name_ru.errors|length > 0 %}has-error{% endif %}">
+                            {{ form.name_ru.label }}
+                            {{ form.name_ru(class='form-control', placeholder=form.name_ru.label.text) }}
+                            {% for error in form.name_ru.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group {% if form.name_uz.errors|length > 0 %}has-error{% endif %}">
+                            {{ form.name_uz.label }}
+                            {{ form.name_uz(class='form-control', placeholder=form.name_uz.label.text) }}
+                            {% for error in form.name_uz.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.image.label }}
+                            {{ form.image }}
+                        </div>
+                        <div class="form-group {% if form.parent.errors %} has-error{% endif %}">
+                            {{ form.parent.label }}
+                            {{ form.parent(class='form-control') }}
+                            {% for error in form.parent.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-buttons">
+                            <a href="{{ url_for('admin.catalog') }}" class="back-button btn btn-flat bg-orange"><i class="fas fa-long-arrow-alt-left"></i>Назад</a>
+                            {{ form.submit(class='save-button btn btn-flat bg-orange') }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

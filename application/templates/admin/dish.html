@@ -1,0 +1,120 @@
+{% extends 'layouts/admin.html' %}
+{% block header %}{{ dish.name }}{% endblock %}
+{% block  description %}
+    Редактировать
+{% endblock %}
+{% block breadcrumbs %}
+    <li><a href="{{ url_for('admin.catalog') }}">Каталог</a></li>
+    <li class="active">{{ dish.name }} | {{ dish.name_uz }}</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Редактировать товар</h3>
+                </div>
+                <div class="box-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if form.name_ru.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form.name_ru.label }}
+                                    {{ form.name_ru(class='form-control', placeholder=form.name_ru.label.text) }}
+                                    {% for error in form.name_ru.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if form.name_uz.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form.name_uz.label }}
+                                    {{ form.name_uz(class='form-control', placeholder=form.name_uz.label.text) }}
+                                    {% for error in form.name_uz.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if form.description_ru.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form.description_ru.label }}
+                                    {{ form.description_ru(class='form-control', placeholder=form.description_ru.label.text) }}
+                                    {% for error in form.description_ru.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if form.description_uz.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form.description_uz.label }}
+                                    {{ form.description_uz(class='form-control', placeholder=form.description_uz.label.text) }}
+                                    {% for error in form.description_uz.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if form.price.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form.price.label }}
+                                    {{ form.price(class='form-control', placeholder=form.price.label.text) }}
+                                    {% for error in form.price.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if form.category.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form.category.label }}
+                                    {{ form.category(class='form-control') }}
+                                    {% for error in form.category.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if form.image.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form.image.label }}
+                                    {{ form.image }}
+                                    <span class="help-block">Для изменения изображения загрузите новый файл, иначе оставьте это поле пустым</span>
+                                    {% for error in form.image.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if dish.image_path %}
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="checkbox">
+                                        <label>
+                                            {{ form.delete_image }} {{ form.delete_image.label.text }}
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="col-md-6 col-sm-12">
+                                <div class="checkbox">
+                                    <label>
+                                        {{ form.show_usd }} {{ form.show_usd.label.text }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons">
+                            <a href="{{ url_for('admin.catalog') }}" class="back-button btn btn-flat bg-orange"><i class="fas fa-long-arrow-alt-left"></i>Назад</a>
+                            {{ form.submit(class='save-button btn btn-flat bg-orange') }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/dish.js') }}"></script>
+{% endblock %}

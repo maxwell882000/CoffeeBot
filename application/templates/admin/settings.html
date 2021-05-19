@@ -1,0 +1,97 @@
+{% extends 'layouts/admin.html' %}
+{% block header %}Настройки{% endblock %}
+{% block description %}Стоимость доставки, локация{% endblock %}
+{% block breadcrumbs %}
+    <li class="active">Настройки</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <div class="h3 box-title">Стоимость доставки</div>
+                </div>
+                <div class="box-body">
+                    <form action="{{ url_for('admin.set_delivery_cost') }}" method="post">
+                        {{ cost_form.hidden_tag() }}
+                        <div class="form-group {% if cost_form.first_3_km.errors|length > 0 %}has-error{% endif %}">
+                            {{ cost_form.first_3_km.label }}
+                            {{ cost_form.first_3_km(class='form-control') }}
+                            {% for error in cost_form.first_3_km.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group {% if cost_form.others_km.errors|length > 0 %}has-error{% endif %}">
+                            {{ cost_form.others_km.label }}
+                            {{ cost_form.others_km(class='form-control') }}
+                            {% for error in cost_form.others_km.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group {% if cost_form.limit_price.errors|length > 0 %}has-error{% endif %}">
+                            {{ cost_form.limit_price.label }}
+                            {{ cost_form.limit_price(class='form-control') }}
+                            {% for error in cost_form.limit_price.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group {% if cost_form.currency_value.errors|length > 0 %}has-error{% endif %}">
+                            {{ cost_form.currency_value.label }}
+                            {{ cost_form.currency_value(class='form-control') }}
+                            {% for error in cost_form.currency_value.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-5">
+                                {{ cost_form.submit(class='btn btn-flat bg-orange') }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <div class="h3 box-title">Локация</div>
+                </div>
+                <div class="box-body">
+                    <div id="map" class="cafe-location" style="height: 600px; width: 100%">
+
+                    </div>
+                    <form action="{{ url_for('admin.set_location') }}" method="post">
+                        {{ location_form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if location_form.latitude.errors|length > 0 %}has_error{% endif %}">
+                                    {{ location_form.latitude.label }}
+                                    {{ location_form.latitude(readonly='readonly') }}
+                                    {% for error in location_form.latitude.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group {% if location_form.longitude.errors|length > 0 %}has_error{% endif %}">
+                                    {{ location_form.longitude.label }}
+                                    {{ location_form.longitude(readonly='readonly') }}
+                                    {% for error in location_form.longitude.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-5">
+                                {{ location_form.submit(class='btn btn-flat bg-orange') }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://api-maps.yandex.ru/2.1/?load=package.full&apikey=4d16304f-12ba-4134-ac9b-f0da5028a1f4&lang=ru_RU" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'layouts/login.html' %}
+
+{% block login_msg %}Авторизуйтесь, чтобы начать сессию{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group has-feedback {% if form.email.errors|length > 0 %} has-error{% endif %}">
+            {{ form.email(class='form-control', placeholder='Email') }}
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            {% for error in form.email.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group has-feedback{% if form.password.errors|length > 0 %} has-error{% endif %}">
+            {{ form.password(class='form-control', placeholder='Пароль') }}
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            {% for error in form.password.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                {{ form.submit(class='btn btn-primary btn-block btn-flat') }}
+            </div>
+        </div>
+    </form>
+{% endblock %}

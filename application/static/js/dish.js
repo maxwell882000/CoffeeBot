@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{let e=document.getElementById("delete_image"),d=document.getElementById("image");e.addEventListener("click",()=>{d.disabled=e.checked,e.checked&&(d.value="")})});

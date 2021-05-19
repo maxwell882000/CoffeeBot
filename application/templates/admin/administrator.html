@@ -1,0 +1,79 @@
+{% extends 'layouts/admin.html' %}
+{% block header %}Администратор{% endblock %}
+{% block description %}Настройки{% endblock %}
+{% block breadcrumbs %}
+    <li class="active">Администратор</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Изменить Email</h3>
+                </div>
+                <div class="box-body">
+                    <form action="{{ url_for('admin.change_email') }}" method="post">
+                        {{ email_form.hidden_tag() }}
+                        <div class="form-group has-feedback {% if email_form.email.errors|length > 0 %}has-error{% endif %}">
+                            {{ email_form.email.label }}
+                            {{ email_form.email(class='form-control', type='email') }}
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            {% for error in email_form.email.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group has-feedback {% if email_form.password.errors|length %}has-error{% endif %}">
+                            {{ email_form.password.label }}
+                            {{ email_form.password(class='form-control') }}
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            {% for error in email_form.password.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-5">
+                                {{ email_form.submit(class='btn btn-flat bg-orange') }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Изменить пароль</h3>
+                </div>
+                <div class="box-body">
+                    <form action="{{ url_for('admin.change_password') }}" method="post">
+                        {{ password_form.hidden_tag() }}
+                        <div class="form-group {% if password_form.current_password.errors|length > 0 %}has-error{% endif %}">
+                            {{ password_form.current_password.label }}
+                            {{ password_form.current_password(class='form-control') }}
+                            {% for error in password_form.current_password.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group {% if password_form.new_password.errors|length > 0 %}has-error{% endif %}">
+                            {{ password_form.new_password.label }}
+                            {{ password_form.new_password(class='form-control') }}
+                            {% for error in password_form.new_password.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group {% if password_form.password_confirmation.errors|length > 0 %}has-error{% endif %}">
+                            {{ password_form.password_confirmation.label }}
+                            {{ password_form.password_confirmation(class='form-control') }}
+                            {% for error in password_form.password_confirmation.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-5">
+                                {{ password_form.submit(class='btn btn-flat bg-orange') }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

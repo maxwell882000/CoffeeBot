@@ -1,0 +1,48 @@
+{% extends 'layouts/admin.html' %}
+{% block styles %}<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />{% endblock %}
+{% block header %}Карта заказов{% endblock %}
+{% block description %}Расположение мест заказов на карте{% endblock %}
+{% block breadcrumbs %}
+    <li class="active">Карта заказов</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Карта</h3>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 220px">
+                            <div id="daterange">
+                                <i class="fas fa-calendar"></i>&nbsp;
+                                <span>Фильтр по дате</span><i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div id="map" style="height: 600px; width: 100%">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="locations" style="display: none">
+        {% for location in locations %}
+            <div class="location-item">
+                <div class="latitude">{{ location.latitude }}</div>
+                <div class="longitude">{{ location.longitude }}</div>
+                <div class="address">{{ location.address }}</div>
+                <div class="date">{{ location.order.confirmation_date|datetime(date_format='%d.%m.%Y', convert_from_utc=True) }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://api-maps.yandex.ru/2.1/?load=package.full&apikey=4d16304f-12ba-4134-ac9b-f0da5028a1f4&lang=ru_RU" type="text/javascript">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="{{ url_for('static', filename='js/locations.js') }}"></script>
+{% endblock %}

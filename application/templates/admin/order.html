@@ -1,0 +1,54 @@
+{% extends 'layouts/admin.html' %}
+{% block header %}Заказ от:{% endblock %}
+{% block description %}{{ order.confirmation_date|datetime(convert_from_utc=True) }}{% endblock %}
+{% block breadcrumbs %}
+    <li><a href="{{ url_for('admin.orders') }}">Заказы</a></li>
+    <li class="active">Заказ от {{ order.confirmation_date|datetime(convert_from_utc=True) }}</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header order-details">
+                    {% if order.delivery_price %}
+                        <p>Общая стоимость заказа (без учёта стоиомсти доставки): <strong>{{ total_sum|price }} $ </strong></p>
+                        <p>Стоимость доставки: <strong>{{ order.delivery_price|price }} $</strong></p>
+                    {% else %}
+                        <p>Общая стоимость заказа: <strong>{{ total_sum|price }} $ </strong></p>
+                    {% endif %}
+                    {% if order.address_txt or order.location %}
+                        <p>Адрес доставки: <strong>{% if order.address_txt %}{{ order.address_txt }}{% elif order.location %}{{ order.location.address }}{% endif %}</strong></p>
+                    {% endif %}
+                    <p>Номер телефона: <strong>{{ order.phone_number }}</strong></p>
+                    {% if order.user_name %}
+                        <p>Имя покупателя: <strong>{{ order.user_name }}</strong></p>
+                    {% endif %}
+                    <p>Способ оплаты: <strong>{{ order.payment_method|payment_method }}</strong></p>
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-hover">
+                        <caption>Содержимое заказа</caption>
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Название</th>
+                                <th>Количество</th>
+                                <th>Цена</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order_item in order.order_items.all() %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ order_item.dish.name }} | {{ order_item.dish.name_uz }}</td>
+                                    <td>{{ order_item.count }}</td>
+                                    <td>{{ (order_item.dish.price * order_item.count)|price }} $</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

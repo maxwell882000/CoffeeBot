@@ -1,0 +1,24 @@
+{% extends 'layouts/admin.html' %}
+{% block breadcrumbs %}
+    <li><a href="{{ url_for('admin.users') }}">Пользователи</a></li>
+    <li class="active">{{ user.full_user_name }}</li>
+{% endblock %}
+{% block header %}
+    Пользователь {{ user.full_user_name }} добавлен
+{% endblock %}
+{% block content %}
+    <div class="container text-center">
+        <h3>
+            <i class="fa fas fa-check-circle text-success"></i> Пользователь {{ user.full_user_name }} добавлен
+            <p>
+                Теперь ему необходимо пройти регистрацию в Telegram-боте с помощью этой ссылки:
+            </p>
+            <a href="https://t.me/{{ bot_username }}/?start={{ user.token }}">https://t.me/{{ bot_username }}/?start={{ user.token }}</a>
+            <p>Скопируйте эту ссылку и отправьте её соответствующему человеку через Telegram</p>
+        </h3>
+        <div class="form-buttons">
+            <a href="{{ url_for('admin.users') }}" class="back-button btn btn-flat bg-orange"><i class="fas fa-long-arrow-alt-left"></i> К списку</a>
+            <a href="{{ url_for('admin.create_user') }}" class="save-button btn btn-flat bg-orange">Добавить ещё</a>
+        </div>
+    </div>
+{% endblock %}
